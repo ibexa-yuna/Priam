@@ -17,10 +17,10 @@
 
 package com.netflix.priam.config;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Singleton;
 import java.io.File;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +31,8 @@ public class FakeConfiguration implements IConfiguration {
     private final String appName;
     private String restorePrefix = "";
     public Map<String, Object> fakeConfig;
+    private boolean mayCreateNewToken;
+    private ImmutableList<String> racs;
 
     public Map<String, String> fakeProperties = new HashMap<>();
 
@@ -42,6 +44,8 @@ public class FakeConfiguration implements IConfiguration {
         this.appName = appName;
         fakeConfig = new HashMap<>();
         fakeConfig.put("auto_bootstrap", false);
+        this.mayCreateNewToken = true; // matches interface default
+        this.racs = ImmutableList.of("az1", "az2", "az3");
     }
 
     public Object getFakeConfig(String key) {
@@ -82,7 +86,11 @@ public class FakeConfiguration implements IConfiguration {
 
     @Override
     public List<String> getRacs() {
-        return Arrays.asList("az1", "az2", "az3");
+        return racs;
+    }
+
+    public void setRacs(String... racs) {
+        this.racs = ImmutableList.copyOf(racs);
     }
 
     @Override
@@ -190,5 +198,14 @@ public class FakeConfiguration implements IConfiguration {
 
     public String getDC() {
         return "us-east-1";
+    }
+
+    @Override
+    public boolean isCreateNewTokenEnable() {
+        return mayCreateNewToken;
+    }
+
+    public void setCreateNewToken(boolean mayCreateNewToken) {
+        this.mayCreateNewToken = mayCreateNewToken;
     }
 }
