@@ -763,4 +763,9 @@ public class PriamConfiguration implements IConfiguration {
     public boolean isForgottenFileMoveEnabled() {
         return config.get(PRIAM_PRE + ".forgottenFileMoveEnabled", false);
     }
+
+    @Override
+    public boolean usePrivateIP() {
+        return config.get(PRIAM_PRE + ".usePrivateIP", false);
+    }
 }

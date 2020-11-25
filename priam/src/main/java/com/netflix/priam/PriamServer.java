@@ -98,7 +98,7 @@ public class PriamServer implements IService {
         scheduler.start();
 
         // update security settings.
-        if (config.isMultiDC()) {
+        if (config.isMultiDC() && !config.usePrivateIP()) {
             scheduler.runTaskNow(UpdateSecuritySettings.class);
             // sleep for 150 sec if this is a new node with new IP for SG to be updated by other
             // seed nodes

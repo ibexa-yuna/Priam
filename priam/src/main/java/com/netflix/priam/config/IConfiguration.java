@@ -1092,6 +1092,13 @@ public interface IConfiguration {
     }
 
     /**
+     * @return true to use private IPs for seeds and insertion into the Token DB false otherwise.
+     */
+    default boolean usePrivateIP() {
+        return false;
+    }
+
+    /**
      * Escape hatch for getting any arbitrary property by key This is useful so we don't have to
      * keep adding methods to this interface for every single configuration option ever. Also
      * exposed via HTTP at v1/config/unstructured/X
